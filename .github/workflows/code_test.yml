@@ -1,0 +1,37 @@
+name: Run Tests
+
+# Triggers the workflow on push or pull request events to the main branch
+on:
+  push:
+    branches:
+      - main
+      - feature/*
+  pull_request:
+    branches:
+      - main
+
+# Defines the jobs that make up the workflow
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: make install
+
+      - name: Run unit tests
+        run: make coverage
+
+      - name: Run integration tests
+        run: make integrationtest

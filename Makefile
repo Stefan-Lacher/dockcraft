@@ -106,9 +106,9 @@ coverage:
 	@echo " "
 	@echo " "
 	@echo "##### Running test coverage #####"
-	coverage run --rcfile=src/.coveragerc -m pytest src/tests/unit
+	coverage run --rcfile=src/.coveragerc -m pytest src/tests/unit 
 	$(MAKE) rm_cache
-	coverage report -m
+	coverage report --fail-under=80 -m
 	rm -rf .coverage
 
 .PHONY: integrationtest
