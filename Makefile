@@ -98,7 +98,7 @@ unittest:
 	@echo " "
 	@echo " "
 	@echo "##### Running unit tests #####"
-	pytest src/tests/unit
+	cd src && pytest -vvv tests/unit
 	$(MAKE) rm_cache
 
 .PHONY: coverage
@@ -106,17 +106,18 @@ coverage:
 	@echo " "
 	@echo " "
 	@echo "##### Running test coverage #####"
-	coverage run --rcfile=src/.coveragerc -m pytest src/tests/unit 
+	cd src && coverage run --rcfile=.coveragerc -m pytest -vvv tests/unit 
 	$(MAKE) rm_cache
-	coverage report --fail-under=80 -m
+	cd src && coverage report --fail-under=80 -m
 	rm -rf .coverage
+	rm -rf src/.coverage
 
 .PHONY: integrationtest
 integrationtest:
 	@echo " "
 	@echo " "
 	@echo "##### Running integration tests #####"
-	pytest src/tests/integration
+	pytest -vvv src/tests/integration
 	$(MAKE) rm_cache
 
 .PHONY: rm_cache
@@ -124,7 +125,10 @@ rm_cache:
 	rm -rf .mypy_cache
 	rm -rf .pytest_cache
 	rm -rf src/__pycache__
+	rm -rf src/.pytest_cache
 	rm -rf src/DockCraft/__pycache__
 	rm -rf src/tests/__pycache__
 	rm -rf src/tests/unit/__pycache__
 	rm -rf src/tests/integration/__pycache__
+	rm -rf src/DockCraft/general/__pycache__
+
