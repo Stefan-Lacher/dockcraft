@@ -13,7 +13,10 @@ from src.DockCraft.main_pipeline import DockCraftPipeline
 @patch("src.DockCraft.main_pipeline.DockCraftFinder")
 @patch("src.DockCraft.main_pipeline.InputParser")
 def test_pipeline_initialization(
-    mock_parser_class: MagicMock, mock_finder_class: MagicMock, mock_reader_class: MagicMock, mock_isdir: MagicMock
+    mock_parser_class: MagicMock,
+    mock_finder_class: MagicMock,
+    mock_reader_class: MagicMock,
+    mock_isdir: MagicMock,
 ) -> None:
     """
     Test that the DockCraftPipeline initializes correctly and calls the required methods.
@@ -52,7 +55,10 @@ def test_pipeline_initialization(
 @patch("src.DockCraft.main_pipeline.DockCraftFinder")
 @patch("src.DockCraft.main_pipeline.InputParser")
 def test_pipeline_no_dockerfiles(
-    mock_parser_class: MagicMock, mock_finder_class: MagicMock, mock_reader_class: MagicMock, mock_isdir: MagicMock
+    mock_parser_class: MagicMock,
+    mock_finder_class: MagicMock,
+    mock_reader_class: MagicMock,
+    mock_isdir: MagicMock,
 ) -> None:
     """
     Test that the DockCraftPipeline handles the case with no Dockerfiles correctly.
@@ -86,7 +92,10 @@ def test_pipeline_no_dockerfiles(
 @patch("src.DockCraft.main_pipeline.DockCraftFinder")
 @patch("src.DockCraft.main_pipeline.InputParser")
 def test_pipeline_multiple_dockerfiles(
-    mock_parser_class: MagicMock, mock_finder_class: MagicMock, mock_reader_class: MagicMock, mock_isdir: MagicMock
+    mock_parser_class: MagicMock,
+    mock_finder_class: MagicMock,
+    mock_reader_class: MagicMock,
+    mock_isdir: MagicMock,
 ) -> None:
     """
     Test that the DockCraftPipeline correctly processes multiple Dockerfiles.

@@ -2,6 +2,8 @@
 the dockcraft_input_parser module provides a class for parsing
 """
 
+# pylint: disable=R0903
+
 import argparse
 from typing import List, Optional
 
@@ -59,7 +61,7 @@ class InputParser:
         return self.parser.parse_args(self.args)
 
 
-if __name__ == "__main__": # pragma: no cover
+if __name__ == "__main__":  # pragma: no cover
     input_parser = InputParser()
     parsed_args = input_parser.parse()
     print(parsed_args)

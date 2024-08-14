@@ -2,7 +2,7 @@
 this module is responsible for finding the Dockerfiles in the specified directory
 """
 
-# pylint: disable=R0903
+# pylint: disable=R0903, W1203
 
 import logging
 import os
@@ -60,7 +60,7 @@ class DockCraftFinder:
                     or file.startswith("Dockerfile")
                 ):
                     dockerfile_list.append(os.path.join(root, file))
-                    logging.info("Found Dockerfile: %s", os.path.join(root, file))
+                    logging.info(f"Found Dockerfile: {os.path.join(root, file)}")
             if not recursive:
                 break
         logging.info(f"Found {len(dockerfile_list)} Dockerfiles")

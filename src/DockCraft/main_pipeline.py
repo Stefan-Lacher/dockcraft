@@ -1,6 +1,6 @@
 """this is the main pipeline for DockCraft"""
 
-# pylint: disable=R0903, W0107
+# pylint: disable=R0903, W0107, W1203
 
 import logging
 import argparse
@@ -29,7 +29,7 @@ class DockCraftPipeline:
             self.general_path = general_path
         else:
             self.general_path = self.parsed_args.path
-        
+
         self.verbose = self.parsed_args.verbose
         self.recursive = self.parsed_args.recursive
         self._prep_logging()
