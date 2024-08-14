@@ -1,6 +1,6 @@
 [run]
 dynamic_context = test_function
-source=src/DockCraft
+source=DockCraft
 omit =
     *__init__*
     */usr/local/lib*
