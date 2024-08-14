@@ -3,6 +3,7 @@ this module is responsible for reading the dockerfile
 and returning the data in a usable format
 """
 
+import logging
 import os
 from typing import List
 
@@ -10,7 +11,7 @@ from typing import List
 class DockerfileReader:
     """the class responsible for reading the Dockerfile"""
 
-    def __init__(self, file_path: str) -> None:
+    def __init__(self, file_path: str = ".") -> None:
         """
         Initializes the DockerfileReader with the path to the Dockerfile.
 
@@ -77,7 +78,7 @@ class DockerfileReader:
         None
         """
         for line in self.content:
-            print(line, end="")
+            logging.debug(line)
 
 
 if __name__ == "__main__":  # pragma: no cover

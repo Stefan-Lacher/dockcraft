@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2024-08-14
+### Added
+- Feature: DockCraft Input Parser
+    - path: For adding the path where to search for Dockerfiles.
+    - verbose: For having more log output. If you set it you change the mode from info to debug.
+    - recursive: Search for Dockerfiles recursively in subdirectories.
+### Changed
+- Changed the main pipeline:
+    - adjusted init with the DockCraft Input Parser
+- Changed for logging:
+    - main pipeline
+    - Dockerfile Reader
+    - Dockerfile Finder
+### Removed
+- print statements
+
 ## [0.3.0] - 2024-08-14
 ### Added
 - Feature: DockCraft File Finder

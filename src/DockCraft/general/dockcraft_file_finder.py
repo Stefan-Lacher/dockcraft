@@ -2,8 +2,9 @@
 this module is responsible for finding the Dockerfiles in the specified directory
 """
 
-# pylint: disable=R0903
+# pylint: disable=R0903, W1203
 
+import logging
 import os
 from typing import List
 
@@ -33,7 +34,7 @@ class DockCraftFinder:
             raise NotADirectoryError(
                 f"The path {directory_path} is not a valid directory."
             )
-
+        logging.debug(f"Initializing DockerfileFinder with directory: {directory_path}")
         self.directory_path = directory_path
 
     def find_dockerfiles(self, recursive: bool = False) -> List[str]:
@@ -52,14 +53,17 @@ class DockCraftFinder:
         dockerfile_list = []
         for root, _, files in os.walk(self.directory_path):
             for file in files:
+                logging.debug(f"Checking file: {file}")
                 if (
                     file == "Dockerfile"
                     or file == "dockerfile"
                     or file.startswith("Dockerfile")
                 ):
                     dockerfile_list.append(os.path.join(root, file))
+                    logging.info(f"Found Dockerfile: {os.path.join(root, file)}")
             if not recursive:
                 break
+        logging.info(f"Found {len(dockerfile_list)} Dockerfiles")
         return dockerfile_list
 
 
