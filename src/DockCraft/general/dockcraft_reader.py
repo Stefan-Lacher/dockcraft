@@ -11,7 +11,7 @@ from typing import List
 class DockerfileReader:
     """the class responsible for reading the Dockerfile"""
 
-    def __init__(self, file_path: str) -> None:
+    def __init__(self, file_path: str = ".") -> None:
         """
         Initializes the DockerfileReader with the path to the Dockerfile.
 

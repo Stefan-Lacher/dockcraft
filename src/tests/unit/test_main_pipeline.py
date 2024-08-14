@@ -2,6 +2,7 @@
 
 # pylint: disable=W0613
 
+import argparse
 from unittest.mock import patch, MagicMock
 
 from src.DockCraft.main_pipeline import DockCraftPipeline
@@ -10,20 +11,30 @@ from src.DockCraft.main_pipeline import DockCraftPipeline
 @patch("os.path.isdir", return_value=True)
 @patch("src.DockCraft.main_pipeline.DockerfileReader")
 @patch("src.DockCraft.main_pipeline.DockCraftFinder")
+@patch("src.DockCraft.main_pipeline.InputParser")
 def test_pipeline_initialization(
-    mock_finder_class: MagicMock, mock_reader_class: MagicMock, mock_isdir: MagicMock
+    mock_parser_class: MagicMock, mock_finder_class: MagicMock, mock_reader_class: MagicMock, mock_isdir: MagicMock
 ) -> None:
     """
     Test that the DockCraftPipeline initializes correctly and calls the required methods.
     """
     # Setup mocks
+    mock_parser_instance = mock_parser_class.return_value
+    mock_parser_instance.parse.return_value = argparse.Namespace(
+        path="test_path", verbose=False, recursive=True
+    )
+
     mock_finder_instance = mock_finder_class.return_value
     mock_finder_instance.find_dockerfiles.return_value = ["Dockerfile1", "Dockerfile2"]
 
     mock_reader_instance = mock_reader_class.return_value
 
     # Initialize DockCraftPipeline
-    DockCraftPipeline(general_path="test_path")
+    DockCraftPipeline()
+
+    # Assertions for InputParser
+    mock_parser_class.assert_called_once()
+    mock_parser_instance.parse.assert_called_once()
 
     # Assertions for finder
     mock_finder_class.assert_called_once_with("test_path")
@@ -39,18 +50,28 @@ def test_pipeline_initialization(
 @patch("os.path.isdir", return_value=True)
 @patch("src.DockCraft.main_pipeline.DockerfileReader")
 @patch("src.DockCraft.main_pipeline.DockCraftFinder")
+@patch("src.DockCraft.main_pipeline.InputParser")
 def test_pipeline_no_dockerfiles(
-    mock_finder_class: MagicMock, mock_reader_class: MagicMock, mock_isdir: MagicMock
+    mock_parser_class: MagicMock, mock_finder_class: MagicMock, mock_reader_class: MagicMock, mock_isdir: MagicMock
 ) -> None:
     """
     Test that the DockCraftPipeline handles the case with no Dockerfiles correctly.
     """
     # Setup mocks
+    mock_parser_instance = mock_parser_class.return_value
+    mock_parser_instance.parse.return_value = argparse.Namespace(
+        path="test_path", verbose=False, recursive=True
+    )
+
     mock_finder_instance = mock_finder_class.return_value
     mock_finder_instance.find_dockerfiles.return_value = []
 
     # Initialize DockCraftPipeline
-    DockCraftPipeline(general_path="test_path")
+    DockCraftPipeline()
+
+    # Assertions for InputParser
+    mock_parser_class.assert_called_once()
+    mock_parser_instance.parse.assert_called_once()
 
     # Assertions for finder
     mock_finder_class.assert_called_once_with("test_path")
@@ -63,13 +84,19 @@ def test_pipeline_no_dockerfiles(
 @patch("os.path.isdir", return_value=True)
 @patch("src.DockCraft.main_pipeline.DockerfileReader")
 @patch("src.DockCraft.main_pipeline.DockCraftFinder")
+@patch("src.DockCraft.main_pipeline.InputParser")
 def test_pipeline_multiple_dockerfiles(
-    mock_finder_class: MagicMock, mock_reader_class: MagicMock, mock_isdir: MagicMock
+    mock_parser_class: MagicMock, mock_finder_class: MagicMock, mock_reader_class: MagicMock, mock_isdir: MagicMock
 ) -> None:
     """
     Test that the DockCraftPipeline correctly processes multiple Dockerfiles.
     """
     # Setup mocks
+    mock_parser_instance = mock_parser_class.return_value
+    mock_parser_instance.parse.return_value = argparse.Namespace(
+        path="test_path", verbose=False, recursive=True
+    )
+
     mock_finder_instance = mock_finder_class.return_value
     mock_finder_instance.find_dockerfiles.return_value = [
         "Dockerfile1",
@@ -80,7 +107,11 @@ def test_pipeline_multiple_dockerfiles(
     mock_reader_instance = mock_reader_class.return_value
 
     # Initialize DockCraftPipeline
-    DockCraftPipeline(general_path="test_path")
+    DockCraftPipeline()
+
+    # Assertions for InputParser
+    mock_parser_class.assert_called_once()
+    mock_parser_instance.parse.assert_called_once()
 
     # Assertions for finder
     mock_finder_class.assert_called_once_with("test_path")

@@ -12,7 +12,7 @@ from .general import DockerfileReader, DockCraftFinder, InputParser
 class DockCraftPipeline:
     """the main pipeline for DockCraft"""
 
-    def __init__(self) -> None:
+    def __init__(self, general_path: str = ".") -> None:
         """
         the initializer for the DockCraft pipeline
 
@@ -25,7 +25,11 @@ class DockCraftPipeline:
         None
         """
         self.parsed_args = self._prep_input_parser()
-        self.general_path = self.parsed_args.path
+        if general_path != ".":
+            self.general_path = general_path
+        else:
+            self.general_path = self.parsed_args.path
+        
         self.verbose = self.parsed_args.verbose
         self.recursive = self.parsed_args.recursive
         self._prep_logging()

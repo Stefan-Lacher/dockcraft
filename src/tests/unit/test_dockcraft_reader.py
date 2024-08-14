@@ -3,6 +3,7 @@
 # pylint: disable=W0613
 
 from unittest.mock import mock_open, patch, MagicMock
+import logging
 import pytest
 
 from src.DockCraft.general.dockcraft_reader import DockerfileReader
@@ -51,6 +52,7 @@ def test_dockerfile_reader_get_content(
     assert content == ["FROM python:3.8\n", "RUN pip install pytest"]
 
 
+
 @patch("src.DockCraft.general.dockcraft_reader.os.path.exists", return_value=True)
 @patch(
     "src.DockCraft.general.dockcraft_reader.open",
@@ -58,11 +60,15 @@ def test_dockerfile_reader_get_content(
     read_data="FROM python:3.8\nRUN pip install pytest",
 )
 def test_dockerfile_reader_print_content(
-    mock_open_: MagicMock, mock_exists: MagicMock, capsys: pytest.CaptureFixture[str]
+    mock_open_: MagicMock, mock_exists: MagicMock, caplog: pytest.LogCaptureFixture
 ) -> None:
     """this test tests the print_content method"""
     reader = DockerfileReader("dummy_path")
-    reader.print_content()
+    
+    with caplog.at_level(logging.DEBUG):
+        reader.print_content()
+    
+    # Ensure the logging output matches the expected content
+    assert "FROM python:3.8" in caplog.text
+    assert "RUN pip install pytest" in caplog.text
 
-    captured = capsys.readouterr()
-    assert captured.out == "FROM python:3.8\nRUN pip install pytest"
